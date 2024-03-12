@@ -1,0 +1,32 @@
+---------provide.tf--------- 
+ provider "aws" {
+  
+}
+--------main.tf-------
+  resource "aws_instance" "localname" {
+  ami = var.ami-id
+  instance_type = var.instace_type
+  key_name = var.key_name
+tags = {
+    Name = "ec2-terraform"
+}
+  ----------varaiable.tf----------------
+  variable "ami-id" {
+  type = string
+  default = "ami-0f403e3180720dd7e"
+}
+variable "instace_type" {
+  type = string
+  default = "t2.micro"
+}
+variable "key_name" {
+  type = string
+  default = "terraform"
+}
+step 1 terraform version -to check version
+      trrraform init - to chech intitilization or not
+  terraform plan 
+  terraform apply 
+  terraform destroy
+  
+  
