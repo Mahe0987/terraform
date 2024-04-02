@@ -1,0 +1,44 @@
+day-4-statefile-backendconfigure
+
+------backhend.tf-------------------
+  terraform {
+  backend "s3" {
+    bucket = "id=djdkcnicbhf3nfiiufh3hiduhufhuhd]"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "terraform-state-lock-dynamo" # DynamoDB table used for state locking, note: first run day-4-statefile-s3
+    encrypt        = true  # Ensures the state is encrypted at rest in S3.
+
+  }
+}
+--------------------main.tf--------------------
+  resource "aws_instance" "localname" {
+    ami = var.ami_id
+    instance_type = var.instance_type
+    key_name = var.key_name
+    availability_zone = "us-east-1b"
+    tags = {
+      Name = "terraform"
+    }
+}
+---------------output.tf------------------
+  output "public" {
+    value = aws_instance.localname.public_ip
+    sensitive = true
+  
+}
+output "private" {
+    value = aws_instance.localname.private_ip
+  
+}
+-------------provider.tf----------------
+  output "public" {
+    value = aws_instance.localname.public_ip
+    sensitive = true
+  
+}
+output "private" {
+    value = aws_instance.localname.private_ip
+  
+}
+--------------------
